@@ -1,20 +1,116 @@
-import React, { Component } from 'react'
+import React, { Component,useState, useEffect } from 'react';
+
+import  {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-// import AdList from './AdList';
+import { CssBaseline } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Words from './Words';
+import Location from './Location';
+import Axios from 'axios';
+import Current from './Current';
+import Spinner from './Spinner';
+import keys from './Keys';
 
-class Home extends Component {
-    render() {
-    return (
-        <div>
-           <Card>
-               <CardContent>
-                   HOME: React 앱 어플리케이션
-               
-               </CardContent>
-        </Card> 
-        </div>
-    )
-}
-}
+// import './App.css';
+
+
+const styles = theme => ({ 
+    fab: {
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+    },
+})
+
+
+const Home = () => {
+  const APPID = keys.APPID;
+  const [current, setCurrent] = useState(null);
+  // 데이터 여기서 받아오잖아 current 
+  console.log("currentApp",current)
+  console.log("setCurrent",setCurrent)
+  const [unit, setUnit] = useState('c');
+  console.log("unit", unit)
+  console.log("setUnit", setUnit)
+
+
+  const getLocation = () => {
+    return new Promise((resolve, reject) => {
+      window.navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  };
+
+  const getTemp = async coords => {
+    const { latitude: lat, longitude: lon } = coords;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APPID}&units=metric&lang=kr`;
+    const result = await Axios.get(url);
+    const { data } = result;
+    setCurrent(data);
+    console.log("coords", coords)
+  };
+
+  const getAll = async () => {
+    try {
+      const { coords } = await getLocation();
+      await getTemp(coords);
+      
+    } catch(error) {
+      alert('위치 정보 동의가 필요합니다...');
+    };
+  };
+
+  useEffect(() => {
+    getAll();
+  }, []);
+
+  const geo = (props) => {
+    const { name} = props.current;
+    const { lon, lat } = props.current.coord;
+    console.log("props", props)
+    console.log("props.current", props.current);
+    console.log("props.current.coord", props.current.coord);
+  }
+
+
+
+  return (
+    <>
+ <React.Fragment>
+ <CssBaseline />
+     <Paper>
+        HOME: React 앱 어플리케이션 
+        Header area
+        total points
+        <main className="container">{!current ? <Spinner /> : 
+            <> 
+            <Current current={current} unit={unit} setUnit={setUnit} /> </>}
+        </main>
+     </Paper>
+     <Paper>
+                    <Typography> list area</Typography>
+                    <CardContent>
+                        <Words />
+                         <Button variant="contained">Default</Button>
+                       
+                    </CardContent>
+                </Paper>
+
+
+                <Paper>
+                    <Typography>완료</Typography>
+                </Paper>
+      
+      </React.Fragment>
+    </>
+  )
+};
+
 export default Home;
+

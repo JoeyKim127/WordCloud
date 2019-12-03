@@ -49,47 +49,6 @@ class Words extends Component {
     }
 
 
-    //  새로운 데이터 삽입
-_post(word) {
-    return fetch(`${databaseURL}/words.json`, {
-        // post 방식은 데이터를 보내고  get방식은 데이터를 가져오는 것
-        method: 'POST',
-        body: JSON.stringify(word)
-    }).then(res => {
-        // 200 아니면 에러 표시 맞으면 json데이터 보여줘
-        if (res.status != 200) {
-            throw new Error(res.statusText);
-        }
-        return res.json();
-    }).then(data => {
-        //  새롭게 추가된 새로운 정보만 새로고침
-        // 추가된 데이터를 받아오는 nextstate라는 변수 만들고
-        let nextState = this.state.words;
-        // 실제로 전송 요청을 한 데이터를 words state에 추가
-        nextState[data.name] =  word;
-        this.setState({words:nextState});
-    });
-}
-
-// 데이터 삭제
-// 특정 아이디값에 접근을해서 
-_delete(id) {
-    return fetch(`${databaseURL}/words/${id}.json`, {
-        method: 'DELETE'
-    }).then(res => {
-            // 200 아니면 에러 표시 맞으면 json데이터 보여줘
-            if (res.status != 200) {
-                throw new Error(res.statusText);
-            }
-            // 성공적인 데이터 반환
-            return res.json();
-    }). then(() => {
-        let nextState = this.state.words;
-        delete nextState[id];
-        this.setState({words: nextState});
-    })
-}
-
     componentDidMount() {
         console.log("componentdidmount", this)
         this._get();
@@ -109,21 +68,6 @@ handleValueChange = (e) => {
     this.setState(nextState);
 }
 
-// 실제 데이터 삽입하기 위한 함수
-handleSubmit = () => {
-    // 사용자가 입력한 값을 word라는 변수안에 넣고
-    const word = {
-        word: this.state.word,
-        weight: this.state.weight
-    }
-    this.handleDialogToggle();
-    //  사용자가 word 또는 weight를 입력하지않은 경우
-    if (!word.word && !word.weight ) {
-        return;
-        }
-        // 둘다입력했으면 정상적으로 post 함수를 불러와서 firebase database에 등록할 수 잇도록
-        this._post(word);
-}
 
 
 // 삭제 버튼 눌렀을 때 delete 함수 수행되도록 설정
@@ -157,6 +101,10 @@ handleDelete = (id) => {
                                     <Button variant="contained" color="primary" onClick={() => this.handleDelete(id)}>
                                         삭제
                                     </Button>
+
+                                    <Button variant="contained" color="primary" >
+                                        popup
+                                    </Button>
                                 </Grid>
                             </Grid>
 
@@ -171,7 +119,7 @@ handleDelete = (id) => {
                 <AddIcon />
             </Fab>
             <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
-                <DialogTitle>단어추가</DialogTitle>
+                <DialogTitle>watch</DialogTitle>
                 <DialogContent>
                     <TextField label="단어" type="text" name="word" value={this.state.word} onChange={this.handleValueChange} />
                     <br />

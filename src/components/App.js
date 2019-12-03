@@ -20,7 +20,7 @@ class App extends Component {
                     <Route exact  path="/words" component={Words} />
                 </div>
             </AppShell>
-            <h2>hello</h2>
+           
       </Router>
     );
 };

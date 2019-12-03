@@ -1,3 +1,9 @@
+
+
+import HomeIcon from '@material-ui/icons/Home';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import PersonIcon from '@material-ui/icons/Person';
+
 import React, { Component } from 'react'
 
 import {Link as RouterLink} from 'react-router-dom';
@@ -38,15 +44,15 @@ class AppShell extends Component {
                 </AppBar>
                 <Drawer open={this.state.toggle} >
                     <MenuItem onClick={this.handleDrawerToggle}>
-                        <Link component={RouterLink} to="/">Home 화면</Link>
+                        <Link component={RouterLink} to="/">Home 화면<HomeIcon /></Link>
                     </MenuItem>
                  
                     <MenuItem onClick={this.handleDrawerToggle}>
-                        <Link component={RouterLink} to="/text">TEXT 화면</Link>
+                        <Link component={RouterLink} to="/text">TEXT 화면<StorefrontIcon /></Link>
                     </MenuItem>
                  
                     <MenuItem onClick={this.handleDrawerToggle}>
-                        <Link component={RouterLink} to="/words">WORDS 화면</Link>
+                        <Link component={RouterLink} to="/words">WORDS 화면<PersonIcon /></Link>
                     </MenuItem>
                 </Drawer>
             </div>
