@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+// import AdList from './AdList';
 
 class Home extends Component {
     render() {
@@ -9,6 +10,7 @@ class Home extends Component {
            <Card>
                <CardContent>
                    HOME: React 앱 어플리케이션
+               
                </CardContent>
         </Card> 
         </div>
