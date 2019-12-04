@@ -12,6 +12,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { DialogContent } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+
+import AdPopup from './AdPopup';
+
+
+const databaseURL = "https://wordcloud-a7c93.firebaseio.com/";
+
 
 const styles = theme => ({ 
     fab: {
@@ -21,7 +30,6 @@ const styles = theme => ({
     },
 })
 
-const databaseURL = "https://wordcloud-a7c93.firebaseio.com/";
 
 class Words extends Component {
     constructor() { 
@@ -74,9 +82,20 @@ handleValueChange = (e) => {
 handleDelete = (id) => {
     this._delete(id);
 }
+
+sendToHome = (weight) => {
+ 
+}
     
+
     render() {
         const { classes } = this.props; 
+       console.log("this.state.words",this.state.words)
+       console.log("this.state.words.weight",this.state.words.weight)
+
+       console.log("this.state.word",this.state.word)
+
+   
     return (
         <div>
             {Object.keys(this.state.words).map(id => {
@@ -85,26 +104,27 @@ handleDelete = (id) => {
                     <div key={id}>
                     <Card>
                         <CardContent>
+                            <Grid container>
+                            <Grid item xs={2}>
+                            <Typography>img</Typography>
+                                </Grid>
+
+                                <Grid item xs={8}>
                             <Typography>title</Typography>
                             
                             <Typography color="textSecondary" gutterBottom>
                                 가중치: {word.weight}
                             </Typography>
-
-                            <Grid container>
-                                <Grid item xs={6}>
-                            <Typography variant="h5" component="h2">
+                                <Typography variant="h5" component="h2">
                                 Word: {word.word}
                             </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
+                        </Grid>
+                            
+                                <Grid item xs={1}>
                                     <Button variant="contained" color="primary" onClick={() => this.handleDelete(id)}>
                                         삭제
                                     </Button>
-
-                                    <Button variant="contained" color="primary" >
-                                        popup
-                                    </Button>
+                                   <AdPopup />
                                 </Grid>
                             </Grid>
 
@@ -126,16 +146,16 @@ handleDelete = (id) => {
                     <TextField label="가중치" type="text" name="weight" value={this.state.weight} onChange={this.handleValueChange} />
                     <br />
                 </DialogContent>
-
                 <DialogActions>
                     <Button variant="contained" color="primary" onClick={this.handleSubmit}>
                         추가
-                    </Button>
-                    <Button variant="outllined" color="primary" onClick={this.handleDialogToggle}>
+                     </Button>
+                    <Button variant="outlined" color="primary" onClick={this.handleDialogToggle}>
                         닫기
                     </Button>
-               </DialogActions>
-            </Dialog>
+                </DialogActions>
+            </Dialog> 
+
            </div>
            
            
