@@ -42,7 +42,7 @@ export default function AdPopup() {
 
 
         <Typography variant="h6" className={classes.title}>
-          
+            {}
         </Typography>
 
 

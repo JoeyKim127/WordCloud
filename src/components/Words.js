@@ -35,25 +35,25 @@ class Words extends Component {
     constructor() { 
         super(); 
         this.state = {
-            words: {},
+            advertisment: {},
             dialog: false,
-            word: '',
-            weight: '',
+            title: '',
+            company: '',
         };
     }
 
     // 데이터 가져오기
     _get() {
-        fetch (`${databaseURL}/words.json`).then(res => {
+        fetch (`${databaseURL}/advertisement.json`).then(res => {
             // 200번이 아니면 firebase에 오류가 발생한거니까 오류 보여주기
             if(res.status != 200) {
                 throw new Error(res.statusText);
-            }
+            } 
             // 200번이면 결과가 json으로 출력해서보여주기
             return res.json();
             // 그리고 그 json 결과를 words라는 변수에 담아서 
             // wordstate값에 데이터베이스에서 출력이 된 단어 정보를 넣도록 한다
-        }).then(words => this.setState({words:words}));
+        }).then(advertisment => this.setState({advertisment:advertisment}));
     }
 
 
@@ -83,23 +83,23 @@ handleDelete = (id) => {
     this._delete(id);
 }
 
-sendToHome = (weight) => {
+// sendToHome = (weight) => {
  
-}
+// }
     
 
     render() {
         const { classes } = this.props; 
-       console.log("this.state.words",this.state.words)
-       console.log("this.state.words.weight",this.state.words.weight)
+    //    console.log("this.state.words",this.state.words)
+    //    console.log("this.state.words.weight",this.state.words.weight)
 
-       console.log("this.state.word",this.state.word)
+    //    console.log("this.state.word",this.state.word)
 
    
     return (
         <div>
-            {Object.keys(this.state.words).map(id => {
-                const word = this.state.words[id];
+            {Object.keys(this.state.advertisment).map(id => {
+                const ad = this.state.advertisment[id];
                 return (
                     <div key={id}>
                     <Card>
@@ -113,10 +113,10 @@ sendToHome = (weight) => {
                             <Typography>title</Typography>
                             
                             <Typography color="textSecondary" gutterBottom>
-                                가중치: {word.weight}
+                                가중치: {ad.company}
                             </Typography>
                                 <Typography variant="h5" component="h2">
-                                Word: {word.word}
+                                Word: {ad.title}
                             </Typography>
                         </Grid>
                             
@@ -141,9 +141,9 @@ sendToHome = (weight) => {
             <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
                 <DialogTitle>watch</DialogTitle>
                 <DialogContent>
-                    <TextField label="단어" type="text" name="word" value={this.state.word} onChange={this.handleValueChange} />
+                    <TextField label="단어" type="text" name="title" value={this.state.title} onChange={this.handleValueChange} />
                     <br />
-                    <TextField label="가중치" type="text" name="weight" value={this.state.weight} onChange={this.handleValueChange} />
+                    <TextField label="가중치" type="text" name="company" value={this.state.company} onChange={this.handleValueChange} />
                     <br />
                 </DialogContent>
                 <DialogActions>

@@ -83,6 +83,7 @@ const Home = (props) => {
 const getPoint = () => {
   // 데이터베이스안에 들어가서 값 가져오기
   // 그리고 값을 setPoint를 설정해서 
+  const totalpoint = this.words.weight
 }
 
   useEffect(() => {
