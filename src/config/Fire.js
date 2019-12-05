@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-const config = {
+const firebaseConfig = {
     apiKey: "AIzaSyAPcYZpgWMa0xIa2et_5kTqMoF3kkZXu-8",
     authDomain: "wordcloud-a7c93.firebaseapp.com",
     databaseURL: "https://wordcloud-a7c93.firebaseio.com",
@@ -13,6 +13,5 @@ const config = {
 
   // Initialize Firebase
   const fire = firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-
-  export default Fire; 
+  
+  export default fire; 

@@ -23,7 +23,6 @@ import AdPopup from './AdPopup'
 
 const databaseURL = "https://wordcloud-a7c93.firebaseio.com/";
 
-
 const styles = theme => ({
   fab: {
     position: 'fixed',
@@ -34,7 +33,6 @@ const styles = theme => ({
     backgroundColor: '#badebc',
   }
 })
-
 
 
 const Home = (props) => {
@@ -49,9 +47,6 @@ const Home = (props) => {
   console.log("unit", unit)
   console.log("setUnit", setUnit)
   console.log("point",point)
-
- 
-
 
 
   const getLocation = (props) => {
@@ -90,6 +85,10 @@ const getPoint = () => {
     getAll();
   }, []);
 
+
+
+
+
   const { classes } = props;
 
   // const geo = (props) => {
@@ -104,6 +103,7 @@ const getPoint = () => {
       <React.Fragment>
         <CssBaseline />
         <Paper className={classes.header}>
+         
           HOME: React 앱 어플리케이션
           Header area
           total points 

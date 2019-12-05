@@ -37,18 +37,17 @@ authListener() {
     });
 }
 
-
     render() {
+        console.log("this.state.user.email",this.state.user.email);
     return (
        <Router>
             <AppShell>
                 <div>
   
-    {this.state.user ? (<Home />) : (<Login />)}
-
-                    <Route exact  path="/" component={Home} />
+            {this.state.user ?  <>
+                     <Route exact  path="/" component={Home} />
                     <Route exact  path="/text" component={Text} />
-                    <Route exact  path="/words" component={Words} />
+                    <Route exact  path="/words" component={Words} /> </>: (<Login />)}
                 </div>
             </AppShell>
            

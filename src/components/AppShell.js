@@ -34,12 +34,14 @@ class AppShell extends Component {
     handleDrawerToggle = () => this.setState({toggle: !this.state.toggle})
     render() {
         const { classes } = this.props; 
+       
         return (
            <div>
             <div className={classes.root}>
                 <AppBar position="static" >
                     <IconButton className={classes.menuButton} color="inherit" onClick={this.handleDrawerToggle}>
                         <MenuIcon />
+                      
                     </IconButton>
                 </AppBar>
                 <Drawer open={this.state.toggle} >
