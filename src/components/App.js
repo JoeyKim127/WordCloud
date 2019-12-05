@@ -37,6 +37,10 @@ authListener() {
     });
 }
 
+// state = {
+//     userdata: this.state.user
+// }
+
     render() {
         console.log("App: this.state.user",this.state.user);
     return (

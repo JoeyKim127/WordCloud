@@ -18,10 +18,10 @@ import Current from './Current';
 import Spinner from './Spinner';
 import keys from './Keys';
 import AdPopup from './AdPopup'
+import NewAdlist from './NewAdlist';
 
 // import './App.css';
 
-const databaseURL = "https://wordcloud-a7c93.firebaseio.com/";
 
 const styles = theme => ({
   fab: {
@@ -86,9 +86,6 @@ const getPoint = () => {
   }, []);
 
 
-
-
-
   const { classes } = props;
 
   // const geo = (props) => {
@@ -102,6 +99,7 @@ const getPoint = () => {
   return (
       <React.Fragment>
         <CssBaseline />
+        <NewAdlist />
         <Paper className={classes.header}>
          
           HOME: React 앱 어플리케이션

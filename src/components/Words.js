@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import fire from '../config/Fire'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +16,7 @@ import { DialogContent } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+
 
 import AdPopup from './AdPopup';
 
@@ -41,6 +43,7 @@ class Words extends Component {
             company: '',
         };
     }
+    
 
     // 데이터 가져오기
     _get() {
@@ -75,18 +78,6 @@ handleValueChange = (e) => {
     nextState[e.target.name] = e.target.value;
     this.setState(nextState);
 }
-
-
-
-// 삭제 버튼 눌렀을 때 delete 함수 수행되도록 설정
-handleDelete = (id) => {
-    this._delete(id);
-}
-
-// sendToHome = (weight) => {
- 
-// }
-    
 
     render() {
         const { classes } = this.props; 
