@@ -17,16 +17,15 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 
-
+import AddToList from './AddToList'
 import AdPopup from './AdPopup';
 
 
 function useTimes() {
-    const [ times, setTimes ] = useState([])
-
+    const [ times, setTimes ] = useState([]);
 
     useEffect(() => {
-        fire
+        const unsubscribe = fire
         .firestore()
         .collection("advertisement")
         .onSnapshot((snapshot) =>  {
@@ -41,6 +40,7 @@ function useTimes() {
 
             setTimes(newTimes)
         })
+        return () => unsubscribe()
     }, [])
 
     return times
@@ -61,8 +61,6 @@ const Words  = () => {
 
     return (
         <div>
-            
-    
             <h2>AdList</h2>
             <div>
             <label>Sort By:</label>{''}
@@ -87,27 +85,13 @@ const Words  = () => {
                     <Grid item xs={1}><AdPopup /></Grid>
                 </Grid> 
                 </CardContent>
-                </Card>     
+                </Card>   
+                
+                 
                 </div>  
-               
                     )}
 <br />
-           <form>
-               <h2>ADD Addition</h2>
-               <div>
-                   <label>title</label>
-                   <input type="text"></input>
-               </div>
-
-               <div>
-                   <label>time</label>
-                   <input type="numbers"></input>
-               </div>
-               <button>ADD</button>
-           </form>
-
-            
-
+                   <AddToList />  
         </div>
 
     )

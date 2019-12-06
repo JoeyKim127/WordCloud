@@ -39,13 +39,10 @@ const Home = (props) => {
   const APPID = keys.APPID;
   const [current, setCurrent] = useState(null);
   // 데이터 여기서 받아오잖아 current 
-  const [unit, setUnit] = useState('c');
   const [ point,setPoint ] = useState(0);
 
   console.log("currentApp", current)
   console.log("setCurrent", setCurrent)
-  console.log("unit", unit)
-  console.log("setUnit", setUnit)
   console.log("point",point)
 
 
@@ -75,18 +72,16 @@ const Home = (props) => {
     };
   };
 
-const getPoint = () => {
-  // 데이터베이스안에 들어가서 값 가져오기
-  // 그리고 값을 setPoint를 설정해서 
-  const totalpoint = this.words.weight
-}
-
-  useEffect(() => {
+ useEffect(() => {
     getAll();
   }, []);
 
+// const getPoint = () => {
+//   // 데이터베이스안에 들어가서 값 가져오기
+//   // 그리고 값을 setPoint를 설정해서 
+//   const totalpoint = this.words.weight
+// }
 
-  const { classes } = props;
 
   // const geo = (props) => {
   //   const { name } = props.current;
@@ -96,9 +91,13 @@ const getPoint = () => {
   //   console.log("props.current.coord", props.current.coord);
   // }
 
+const { classes } = props;
+
+// console.log("Home: this.state.user.email",this.state.user.email);
   return (
       <React.Fragment>
         <CssBaseline />
+
         <Paper className={classes.header}>
          
           HOME: React 앱 어플리케이션
@@ -106,7 +105,7 @@ const getPoint = () => {
           total points 
         <main className="container">{!current ? <Spinner /> :
             <>
-              <Current current={current} unit={unit} setUnit={setUnit} /> </>}
+              <Current current={current}  /> </>}
           </main>
         </Paper>
         <Paper>
