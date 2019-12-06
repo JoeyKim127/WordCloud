@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import fire from '../config/Fire'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -21,8 +21,30 @@ import Slide from '@material-ui/core/Slide';
 import AdPopup from './AdPopup';
 
 
-const databaseURL = "https://wordcloud-a7c93.firebaseio.com/";
+function useTimes() {
+    const [ times, setTimes ] = useState([])
 
+
+    useEffect(() => {
+        fire
+        .firestore()
+        .collection("advertisement")
+        .onSnapshot((snapshot) =>  {
+            console.log("snapshot.docs",snapshot.docs)
+            console.log("snapshot.docs[2].id",snapshot.docs[2].id)
+            console.log("snapshot.docs[2].data()",snapshot.docs[2].data())
+
+            const newTimes = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            setTimes(newTimes)
+        })
+    }, [])
+
+    return times
+}
 
 const styles = theme => ({ 
     fab: {
@@ -33,124 +55,62 @@ const styles = theme => ({
 })
 
 
-class Words extends Component {
-    constructor() { 
-        super(); 
-        this.state = {
-            advertisment: {},
-            dialog: false,
-            title: '',
-            company: '',
-        };
-    }
-    
+const Words  = () => { 
 
-    // 데이터 가져오기
-    _get() {
-        fetch (`${databaseURL}/advertisement.json`).then(res => {
-            // 200번이 아니면 firebase에 오류가 발생한거니까 오류 보여주기
-            if(res.status != 200) {
-                throw new Error(res.statusText);
-            } 
-            // 200번이면 결과가 json으로 출력해서보여주기
-            return res.json();
-            // 그리고 그 json 결과를 words라는 변수에 담아서 
-            // wordstate값에 데이터베이스에서 출력이 된 단어 정보를 넣도록 한다
-        }).then(advertisment => this.setState({advertisment:advertisment}));
-    }
+    const times = useTimes()
 
-
-    componentDidMount() {
-        console.log("componentdidmount", this)
-        this._get();
-    }
-
-
-handleDialogToggle = () => this.setState({
-    // 스위치 함수: dialog 상태를  true에서 false로 전환, false에서 true로 전환
-    dialog: !this.state.dialog
-})
-
-//사용자가 화면에서 새로운 데이터를 입력하면 react에서는 샃태변화를 통해
-// 사용자가 입력하는 정보는 화면에서 보여주기 위해서는 valuechange라는 함수가 꼭 필요하다
-handleValueChange = (e) => {
-    let nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
-}
-
-    render() {
-        const { classes } = this.props; 
-    //    console.log("this.state.words",this.state.words)
-    //    console.log("this.state.words.weight",this.state.words.weight)
-
-    //    console.log("this.state.word",this.state.word)
-
-   
     return (
         <div>
-            {Object.keys(this.state.advertisment).map(id => {
-                const ad = this.state.advertisment[id];
-                return (
-                    <div key={id}>
-                    <Card>
-                        <CardContent>
-                            <Grid container>
-                            <Grid item xs={2}>
-                            <Typography>img</Typography>
-                                </Grid>
+            
+    
+            <h2>AdList</h2>
+            <div>
+            <label>Sort By:</label>{''}
+            <select>
+                <option>location</option>
+                <option disabled >-----</option>
+                <option>A to Z</option>
+            </select>
+            </div>
 
-                                <Grid item xs={8}>
-                            <Typography>title</Typography>
-                            
-                            <Typography color="textSecondary" gutterBottom>
-                                가중치: {ad.company}
-                            </Typography>
-                                <Typography variant="h5" component="h2">
-                                Word: {ad.title}
-                            </Typography>
-                        </Grid>
-                            
-                                <Grid item xs={1}>
-                                    <Button variant="contained" color="primary" onClick={() => this.handleDelete(id)}>
-                                        삭제
-                                    </Button>
-                                   <AdPopup />
-                                </Grid>
-                            </Grid>
+                {times.map((time) =>
+            <div key={time.id}>
+                <Card>
+                <CardContent>
+                <Grid container>
+                    <Grid item xs={2}> {time.img} </Grid>
+                    <Grid item xs={8}>
+                        <Typography>{time.title}</Typography>
+                        <Typography color="textSecondary">{time.company}</Typography>
+                        <Typography gutterBottom>{time.location}</Typography>
+                    </Grid>
+                    <Grid item xs={1}><AdPopup /></Grid>
+                </Grid> 
+                </CardContent>
+                </Card>     
+                </div>  
+               
+                    )}
+<br />
+           <form>
+               <h2>ADD Addition</h2>
+               <div>
+                   <label>title</label>
+                   <input type="text"></input>
+               </div>
 
-                        </CardContent>
-                    </Card>
-                   </div> 
-                );
-            })}
+               <div>
+                   <label>time</label>
+                   <input type="numbers"></input>
+               </div>
+               <button>ADD</button>
+           </form>
 
-            {/* 밑에서 고정되어 둥둥 떠다니는 버큰 */}
-            <Fab color="primary" className={classes.fab} onClick={this.handleDialogToggle}>
-                <AddIcon />
-            </Fab>
-            <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
-                <DialogTitle>watch</DialogTitle>
-                <DialogContent>
-                    <TextField label="단어" type="text" name="title" value={this.state.title} onChange={this.handleValueChange} />
-                    <br />
-                    <TextField label="가중치" type="text" name="company" value={this.state.company} onChange={this.handleValueChange} />
-                    <br />
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="primary" onClick={this.handleSubmit}>
-                        추가
-                     </Button>
-                    <Button variant="outlined" color="primary" onClick={this.handleDialogToggle}>
-                        닫기
-                    </Button>
-                </DialogActions>
-            </Dialog> 
+            
 
-           </div>
-           
-           
-        );
-    }
+        </div>
+
+    )
 }
+
 export default withStyles(styles)(Words);

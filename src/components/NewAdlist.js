@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import fire from '../config/Fire'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,32 +19,49 @@ import Slide from '@material-ui/core/Slide';
 
 import AdPopup from './AdPopup';
 
-// fire.filestore().collections("advertisement").add({
-//     title: 'bottle',
-//     img: '',
-//     location: 'seoul',
-//     company: 'company',
-// })
+function useTimes() {
+    const [ times, setTimes ] = useState([])
 
 
-// const db = fire.firestore();
-//             db.settings({
-//                 timestampsInSnapshots: true
-//             });
-//             const ad = db.collection("advertisement").add({
-//                 title: 'bottle',
-//                 img: '',
-//                 location: 'seoul',
-//                 company: 'company',
-//             });  
-//             console.log("dbuser",ad);
-        
-const NewAdlist  = () => {
+    useEffect(() => {
+        fire
+        .firestore()
+        .collection("advertisement")
+        .onSnapshot((snapshot) =>  {
+            console.log("snapshot.docs",snapshot.docs)
+            console.log("snapshot.docs[2].id",snapshot.docs[2].id)
+            console.log("snapshot.docs[2].data()",snapshot.docs[2].data())
 
+            const newTimes = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            setTimes(newTimes)
+        })
+    }, [])
+
+    return times
+}
+
+const styles = theme => ({ 
+    fab: {
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+    },
+})
+
+
+const NewAdlist  = () => { 
+
+    const times = useTimes()
 
     return (
         <div>
-            <h2>new AdList</h2>
+            
+    
+            <h2>AdList</h2>
             <div>
             <label>Sort By:</label>{''}
             <select>
@@ -53,31 +70,28 @@ const NewAdlist  = () => {
                 <option>A to Z</option>
             </select>
             </div>
-            <ol>
-                <li>
-                <div className="title">
-                    phone
-                    <code className="time">18 seconds</code>
-                </div>
-                </li>
 
-                <li>
-                <div className="title">
-                    phone
-                    <code className="time">18 seconds</code>
-                </div>
-                </li>
-
-                <li>
-                <div className="title">
-                    phone
-                    <code className="time">18 seconds</code>
-                </div>
-                </li>
-            </ol>
+                {times.map((time) =>
+            <div key={time.id}>
+                <Card>
+                <CardContent>
+                <Grid container>
+                    <Grid item xs={2}> {time.img} </Grid>
+                    <Grid item xs={8}>
+                        <Typography>{time.title}</Typography>
+                        <Typography color="textSecondary">{time.company}</Typography>
+                        <Typography gutterBottom>{time.location}</Typography>
+                    </Grid>
+                    <Grid item xs={1}><AdPopup /></Grid>
+                </Grid> 
+                </CardContent>
+                </Card>     
+                </div>  
+               
+                    )}
 <br />
            <form>
-               <h2>ADD Addition</h2>
+               <h2>update points</h2>
                <div>
                    <label>title</label>
                    <input type="text"></input>
@@ -90,12 +104,11 @@ const NewAdlist  = () => {
                <button>ADD</button>
            </form>
 
+            
 
         </div>
 
     )
 }
 
-
-export default NewAdlist;
-    
+export default withStyles(styles)(NewAdlist);

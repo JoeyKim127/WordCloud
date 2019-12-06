@@ -99,7 +99,6 @@ const getPoint = () => {
   return (
       <React.Fragment>
         <CssBaseline />
-        <NewAdlist />
         <Paper className={classes.header}>
          
           HOME: React 앱 어플리케이션
