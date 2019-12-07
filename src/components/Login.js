@@ -38,7 +38,7 @@ class Login extends Component {
         e.preventDefault();
         fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((u) => {
-            console.log("signup-this.state.email",this.state.email)
+            // console.log("signup-this.state.email",this.state.email)
             // firestorage안에 데이터 넣기
                 e.preventDefault();
             const db = fire.firestore();
@@ -51,6 +51,9 @@ class Login extends Component {
                 point: 0
             });  
             console.log("dbuser",userRef);
+            // console.log("Login: snapshot.docs",snapshot.docs)
+            // console.log("Login: snapshot.docs[2].id",snapshot.docs[2].id)
+            // console.log("Login: snapshot.docs[2].data()",snapshot.docs[2].data())
                 })
         .catch((error) => {
         console.log(error);

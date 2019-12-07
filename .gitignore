@@ -4,3 +4,4 @@ build
 firebase.json
 .firebaserc
 keys.js
+fire.js

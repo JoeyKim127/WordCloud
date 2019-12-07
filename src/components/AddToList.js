@@ -1,5 +1,10 @@
 import React, { useState,useEffect } from 'react'
+
 import fire from '../config/Fire'
+import FileUploader from 'react-firebase-file-uploader';
+import firebase from 'firebase';
+import FileUpload from './Fileupload'
+
 
 const AddToList = () => {
 
@@ -11,7 +16,6 @@ const AddToList = () => {
 
 function onSubmit(e) {
     e.preventDefault()
-
     fire
     .firestore()
     .collection("advertisement")
@@ -29,6 +33,14 @@ function onSubmit(e) {
     })
 }
 
+function onSelectImgtoStorage(e){
+
+
+// add to database
+// e => setImg(e.currentTarget.value) 
+} 
+
+
 
 return (
         <form onSubmit={onSubmit}>
@@ -40,17 +52,18 @@ return (
 
                <div>
                    <label>company</label>
-                   <input type="numbers" value={company} onChange={e => setCompany(e.currentTarget.value)}></input>
+                   <input type="text" value={company} onChange={e => setCompany(e.currentTarget.value)}></input>
                </div>
 
                <div>
                    <label>location</label>
-                   <input type="numbers" value={location} onChange={e => setLocation(e.currentTarget.value)}></input>
+                   <input type="text" value={location} onChange={e => setLocation(e.currentTarget.value)}></input>
                </div>
 
+     <FileUpload />
                <div>
                    <label>img</label>
-                   <input type="numbers" value={img} onChange={e => setImg(e.currentTarget.value)}></input>
+                   <input type="file" value={img} onChange={e => setImg(e.currentTarget.value) } />
                </div>
                <button>ADD</button>
            </form>

@@ -29,9 +29,9 @@ function useTimes() {
         .firestore()
         .collection("advertisement")
         .onSnapshot((snapshot) =>  {
-            console.log("snapshot.docs",snapshot.docs)
-            console.log("snapshot.docs[2].id",snapshot.docs[2].id)
-            console.log("snapshot.docs[2].data()",snapshot.docs[2].data())
+            // console.log("snapshot.docs",snapshot.docs)
+            // console.log("snapshot.docs[2].id",snapshot.docs[2].id)
+            // console.log("snapshot.docs[2].data()",snapshot.docs[2].data())
 
             const newTimes = snapshot.docs.map((doc) => ({
                 id: doc.id,
