@@ -1,5 +1,7 @@
+
 import React, { useState,useEffect } from 'react'
 import fire from '../config/Fire'
+import 'firebase/firestore';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -14,13 +16,14 @@ import Slide from '@material-ui/core/Slide';
 function useUsers() {
     const [ users, setUsers ] = useState([]);
 
+    console.log("this.state.user.email",)
+
     useEffect(() => {
         fire
         .firestore()
-        .collection("users")
-        .onSnapshot((snapshot) =>  { 
-            console.log("UserInfo:snapshot.docs[2].data()",snapshot.docs[2].data())
-
+        .collection("users")  
+        .where("email", "==" ,"aaa@aaa.com").get().then((snapshot) => { 
+        
             const newUsers = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
@@ -29,6 +32,7 @@ function useUsers() {
             setUsers(newUsers)
 
         })
+       
     }, [])
    
     return users
@@ -42,26 +46,27 @@ const styles = theme => ({
     },
 })
 
-
 const UserInfo  = () => { 
 
-    const users = useUsers()
+        const users = useUsers()
+    
+        return (
+            <div>
+                <h2>display userinfo</h2>
+    
+                {users.map((user) =>
+                <Card>
+                    <CardContent>
+                        {user.email} {user.name} {user.point}
+                    </CardContent>
+                    </Card>   
+    
+    )}
+            </div>
+    
+        )
+    }
 
-    return (
-        <div>
-            <h2>display userinfo</h2>
+   export default withStyles(styles)(UserInfo);
 
-            {users.map((user) =>
-            <Card>
-                <CardContent>
-                    {user.email} {user.name} {user.point}
-                </CardContent>
-                </Card>   
 
-)}
-        </div>
-
-    )
-}
-
-export default withStyles(styles)(UserInfo);

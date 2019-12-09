@@ -42,11 +42,11 @@ const Home = (props) => {
   const APPID = keys.APPID;
   const [current, setCurrent] = useState(null);
   // 데이터 여기서 받아오잖아 current 
-  const [ point,setPoint ] = useState(0);
+  // const [ point,setPoint ] = useState(0);
 
   console.log("currentApp", current)
   console.log("setCurrent", setCurrent)
-  console.log("point",point)
+  // console.log("point",point)
 
 
   const getLocation = (props) => {

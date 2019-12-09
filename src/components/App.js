@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import AppShell from './AppShell';
 import Home from './Home';
-import Text from './Text';
+import Profile from './Profile';
 import Words from './Words';
 import fire from '../config/Fire';
 import Login from './Login';
+import Shop from './Shop';
 
 
 
@@ -51,8 +52,8 @@ authListener() {
   
             {this.state.user ?  <>
                      <Route exact  path="/" component={Home} />
-                    <Route exact  path="/text" component={Text} />
-                    <Route exact  path="/words" component={Words} /> </>: (<Login />)}
+                    <Route exact  path="/profile" component={Profile} />
+                    <Route exact  path="/shop" component={Shop} /> </>: (<Login />)}
                 </div>
             </AppShell>
            

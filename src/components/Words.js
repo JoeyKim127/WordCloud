@@ -25,10 +25,11 @@ function useTimes() {
     const [ times, setTimes ] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = fire
+        // const unsubscribe = 
+        fire
         .firestore()
         .collection("advertisement")
-        .onSnapshot((snapshot) =>  { 
+        .where("location","==","seoul").get().then((snapshot) =>  { 
             
             // console.log("words:snapshot.docs[2].id",snapshot.docs[2].id)
             // console.log("words:snapshot.docs[2].data()",snapshot.docs[2].data())
@@ -39,9 +40,11 @@ function useTimes() {
             }))
 
             setTimes(newTimes)
-        })
-        return () => unsubscribe()
-        
+       
+
+        // return () => unsubscribe()
+
+         })
 
     }, [])
    
