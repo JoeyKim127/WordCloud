@@ -16,9 +16,7 @@ const AddToList = () => {
 
 function onSubmit(e) {
     e.preventDefault()
-    fire
-    .firestore()
-    .collection("advertisement")
+    fire.firestore().collection("advertisement")
     .add({
         title,
         company,
@@ -61,6 +59,8 @@ return (
                </div>
 
      <FileUpload />
+
+
                <div>
                    <label>img</label>
                    <input type="file" value={img} onChange={e => setImg(e.currentTarget.value) } />

@@ -28,10 +28,11 @@ function useTimes() {
         const unsubscribe = fire
         .firestore()
         .collection("advertisement")
-        .onSnapshot((snapshot) =>  {
-            // console.log("snapshot.docs",snapshot.docs)
-            // console.log("snapshot.docs[2].id",snapshot.docs[2].id)
-            // console.log("snapshot.docs[2].data()",snapshot.docs[2].data())
+        .onSnapshot((snapshot) =>  { 
+            console.log("words: snapshot",snapshot)
+            console.log("words:snapshot.docs",snapshot.docs)
+            console.log("words:snapshot.docs[2].id",snapshot.docs[2].id)
+            // console.log("words:snapshot.docs[2].data()",snapshot.docs[2].data())
 
             const newTimes = snapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -41,8 +42,10 @@ function useTimes() {
             setTimes(newTimes)
         })
         return () => unsubscribe()
-    }, [])
+        
 
+    }, [])
+   
     return times
 }
 

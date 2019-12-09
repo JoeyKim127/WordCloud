@@ -19,6 +19,8 @@ import Spinner from './Spinner';
 import keys from './Keys';
 import AdPopup from './AdPopup'
 import NewAdlist from './NewAdlist';
+import UserInfo from './UserInfo'
+
 
 
 // import './App.css';
@@ -99,6 +101,8 @@ const { classes } = props;
       <React.Fragment>
         <CssBaseline />
         <Paper className={classes.header}>
+
+          <UserInfo />
          
           HOME: React 앱 어플리케이션
           Header area
