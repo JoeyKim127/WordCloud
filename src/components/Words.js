@@ -29,9 +29,8 @@ function useTimes() {
         .firestore()
         .collection("advertisement")
         .onSnapshot((snapshot) =>  { 
-            console.log("words: snapshot",snapshot)
-            console.log("words:snapshot.docs",snapshot.docs)
-            console.log("words:snapshot.docs[2].id",snapshot.docs[2].id)
+            
+            // console.log("words:snapshot.docs[2].id",snapshot.docs[2].id)
             // console.log("words:snapshot.docs[2].data()",snapshot.docs[2].data())
 
             const newTimes = snapshot.docs.map((doc) => ({
@@ -55,12 +54,41 @@ const styles = theme => ({
         bottom: 20,
         right: 20,
     },
+    imgsize: {
+        // flex: '1',
+        // maxWidth: '100%',
+        height: 'auto',
+        width: '100%',
+    // overflow: 'hidden',
+    // width: '50px',
+    // height: '50px',
+    // objectFit: 'cover'
+}
 })
 
 
-const Words  = () => { 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+const Words  = (props) => { 
 
     const times = useTimes()
+
+    const [open, setOpen] = React.useState(false);
+    const [image, setImage] = React.useState('');
+
+    const handleClickOpen = ({ img }) => {
+    setOpen(true);
+    setImage(img);
+  };
+
+  const handleClose = () => {
+    //   add points
+    setOpen(false);
+  };
+
+    const { classes } = props;
 
     return (
         <div>
@@ -79,13 +107,30 @@ const Words  = () => {
                 <Card>
                 <CardContent>
                 <Grid container>
-                    <Grid item xs={2}> {time.img} </Grid>
+                    <Grid item xs={2}> 
+                        <img className={classes.imgsize} src={time.img} />
+                    </Grid>
                     <Grid item xs={8}>
                         <Typography>{time.title}</Typography>
                         <Typography color="textSecondary">{time.company}</Typography>
                         <Typography gutterBottom>{time.location}</Typography>
                     </Grid>
-                    <Grid item xs={1}><AdPopup /></Grid>
+                    <Grid item xs={1}>
+                        {/* <AdPopup /> */}
+                        <Button variant="contained" color="primary" onClick={() => {handleClickOpen(time)}}> popup</Button>
+                        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition} >
+
+                            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+
+                            <img className={classes.imgsize} src={`${image}`} />
+                            <Button autoFocus color="inherit" onClick={handleClose}>
+                                Add 7  point 
+                            </Button>
+
+                        </Dialog>
+                    </Grid>
                 </Grid> 
                 </CardContent>
                 </Card>   

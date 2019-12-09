@@ -37,7 +37,7 @@ const { classes } = props;
 
   return (
     <div>
-            <Button variant="contained" color="primary" onClick={handleClickOpen}> popup</Button>
+            <Button variant="contained" color="primary" onClick={handleClickOpen}> Add popup </Button>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         
         <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
@@ -46,7 +46,7 @@ const { classes } = props;
 
 
         <Typography variant="h6" className={classes.title}>
-            {}
+        {/* <img height="100px" width="100px" src ={time.img} /> */}
         </Typography>
 
 
