@@ -20,11 +20,9 @@ import keys from './Keys';
 import AdPopup from './AdPopup'
 import NewAdlist from './NewAdlist';
 import UserInfo from './UserInfo'
-
-
+import fire from '../config/Fire';
 
 // import './App.css';
-
 
 const styles = theme => ({
   fab: {
@@ -41,14 +39,28 @@ const styles = theme => ({
 const Home = (props) => {
   const APPID = keys.APPID;
   const [current, setCurrent] = useState(null);
+  const [ name, setName ] = useState('');
+  const [ times, setTimes ] = useState([]);
   // 데이터 여기서 받아오잖아 current 
   // const [ point,setPoint ] = useState(0);
-
-  console.log("currentApp", current)
-  console.log("setCurrent", setCurrent)
+  console.log("Home: current", current)
   // console.log("point",point)
 
 
+const adList = async (name) => { 
+ await fire
+  .firestore()
+  .collection("advertisement")
+  .where("location","==",name).get().then((snapshot) =>  { 
+      const newTimes = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setTimes(newTimes)
+})
+}
+
+  
   const getLocation = (props) => {
     return new Promise((resolve, reject) => {
       window.navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -62,6 +74,8 @@ const Home = (props) => {
     const result = await Axios.get(url);
     const { data } = result;
     setCurrent(data);
+    setName(data.name);
+    adList(data.name);
     console.log("coords", coords)
   };
 
@@ -85,18 +99,8 @@ const Home = (props) => {
 //   const totalpoint = this.words.weight
 // }
 
-
-  // const geo = (props) => {
-  //   const { name } = props.current;
-  //   const { lon, lat } = props.current.coord;
-  //   console.log("props", props)
-  //   console.log("props.current", props.current);
-  //   console.log("props.current.coord", props.current.coord);
-  // }
-
 const { classes } = props;
 
-// console.log("Home: this.state.user.email",this.state.user.email);
   return (
       <React.Fragment>
         <CssBaseline />
@@ -115,7 +119,7 @@ const { classes } = props;
         <Paper>
           <Typography> list area</Typography>
           <CardContent>
-            <Words />
+            <Words name={name} times={times}/>
           </CardContent>
         </Paper>
 

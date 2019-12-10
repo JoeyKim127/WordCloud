@@ -23,16 +23,12 @@ function useUsers() {
         .firestore()
         .collection("users")  
         .where("email", "==" ,"aaa@aaa.com").get().then((snapshot) => { 
-        
             const newUsers = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
             }))
-
             setUsers(newUsers)
-
         })
-       
     }, [])
    
     return users

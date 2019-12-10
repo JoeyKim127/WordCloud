@@ -2,13 +2,11 @@ import React from 'react';
 
 
 const Current = (props) => {
-  const { name} = props.current;
+  const { name } = props.current;
   const { lon, lat } = props.current.coord;
   const { country } = props.current.sys;
-  // console.log("props", props)
-  // console.log("props.current", props.current);
-  // console.log("props.current.coord", props.current.coord);
-
+  
+  console.log("Current: props.current.name", props.current.name);
   
   return (
     <>

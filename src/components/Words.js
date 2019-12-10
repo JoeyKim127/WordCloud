@@ -21,36 +21,6 @@ import AddToList from './AddToList'
 import AdPopup from './AdPopup';
 
 
-function useTimes() {
-    const [ times, setTimes ] = useState([]);
-
-    useEffect(() => {
-        // const unsubscribe = 
-        fire
-        .firestore()
-        .collection("advertisement")
-        .where("location","==","seoul").get().then((snapshot) =>  { 
-            
-            // console.log("words:snapshot.docs[2].id",snapshot.docs[2].id)
-            // console.log("words:snapshot.docs[2].data()",snapshot.docs[2].data())
-
-            const newTimes = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }))
-
-            setTimes(newTimes)
-       
-
-        // return () => unsubscribe()
-
-         })
-
-    }, [])
-   
-    return times
-}
-
 const styles = theme => ({ 
     fab: {
         position: 'fixed',
@@ -58,14 +28,8 @@ const styles = theme => ({
         right: 20,
     },
     imgsize: {
-        // flex: '1',
-        // maxWidth: '100%',
         height: 'auto',
         width: '100%',
-    // overflow: 'hidden',
-    // width: '50px',
-    // height: '50px',
-    // objectFit: 'cover'
 }
 })
 
@@ -74,24 +38,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const Words  = (props) => { 
 
-    const times = useTimes()
+const Words  = ({name,times,classes}) => { 
 
-    const [open, setOpen] = React.useState(false);
-    const [image, setImage] = React.useState('');
+    const [open, setOpen] = useState(false);
+    const [image, setImage] = useState('');
 
     const handleClickOpen = ({ img }) => {
     setOpen(true);
     setImage(img);
   };
 
-  const handleClose = () => {
+const handleClose = () => {
     //   add points
     setOpen(false);
   };
 
-    const { classes } = props;
 
     return (
         <div>
@@ -114,7 +76,7 @@ const Words  = (props) => {
                         <img className={classes.imgsize} src={time.img} />
                     </Grid>
                     <Grid item xs={8}>
-                        <Typography>{time.title}</Typography>
+                <Typography>{time.title} </Typography>
                         <Typography color="textSecondary">{time.company}</Typography>
                         <Typography gutterBottom>{time.location}</Typography>
                     </Grid>
@@ -137,13 +99,11 @@ const Words  = (props) => {
                 </Grid> 
                 </CardContent>
                 </Card>   
-                
-                 
                 </div>  
                     )}
 <br />
                    <AddToList />  
-        </div>
+            </div>
 
     )
 }

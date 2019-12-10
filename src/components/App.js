@@ -9,9 +9,6 @@ import Login from './Login';
 import Shop from './Shop';
 
 
-
-
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -37,24 +34,25 @@ authListener() {
         }
     });
 }
+ 
 
-// state = {
-//     userdata: this.state.user
-// }
 
     render() {
+        // console.log("App: this.state",this.state);
         console.log("App: this.state.user",this.state.user);
-        console.log("App: this.state.user.email",this.state.user.email);
+        // console.log("App: this.state.user.email",this.state.user.email);
+        // console.log("authState",authState);
     return (
        <Router>
             <AppShell>
                 <div>
   
             {this.state.user ?  <>
-                     <Route exact  path="/" component={Home} />
-                    <Route exact  path="/profile" component={Profile} />
+                    <Route exact  path="/" render={(props) => <Home {...props} loggedInUser={this.state.user} />}/> 
+                    <Route exact  path="/profile" render={(props) => <Profile {...props} loggedInUser={this.state.user} />}/>
                     <Route exact  path="/shop" component={Shop} /> </>: (<Login />)}
                 </div>
+
             </AppShell>
            
       </Router>

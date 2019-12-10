@@ -17,10 +17,15 @@ class Text extends Component {
   
   
     render() {
+
+    console.log("Profile: this.props.loggedInUser",this.props.loggedInUser);
+
     return (
         <div>
            <Card>
                <CardContent>
+    <h3>{this.props.loggedInUser.email}</h3>
+                
                <Button onClick={this.logout} variant="contained" color="primary" >
                                         logout
                                     </Button>
