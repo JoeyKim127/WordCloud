@@ -12,28 +12,6 @@ import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 
-
-function useUsers() {
-    const [ users, setUsers ] = useState([]);
-
-    console.log("this.state.user.email",)
-
-    useEffect(() => {
-        fire
-        .firestore()
-        .collection("users")  
-        .where("email", "==" ,"aaa@aaa.com").get().then((snapshot) => { 
-            const newUsers = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }))
-            setUsers(newUsers)
-        })
-    }, [])
-   
-    return users
-}
-
 const styles = theme => ({ 
     fab: {
         position: 'fixed',
@@ -42,24 +20,27 @@ const styles = theme => ({
     },
 })
 
-const UserInfo  = () => { 
+const UserInfo  = ({email,users,classes}) => { 
 
-        const users = useUsers()
-    
+    console.log()
         return (
             <div>
+                <div>
                 <h2>display userinfo</h2>
-    
-                {users.map((user) =>
-                <Card>
+                </div>
+                {users.map((user)=> 
+                <div key={user.id}>
+                 <Card>
                     <CardContent>
-                        {user.email} {user.name} {user.point}
+                        {user.email} 
+                        {user.name} 
+                        {user.point}
                     </CardContent>
-                    </Card>   
-    
-    )}
-            </div>
-    
+                </Card>   
+                
+                </div>
+                )}
+                </div>
         )
     }
 

@@ -14,8 +14,7 @@ class Text extends Component {
  logout() {
     fire.auth().signOut();
   }
-  
-  
+
     render() {
 
     console.log("Profile: this.props.loggedInUser",this.props.loggedInUser);
@@ -24,11 +23,10 @@ class Text extends Component {
         <div>
            <Card>
                <CardContent>
-    <h3>{this.props.loggedInUser.email}</h3>
-                
-               <Button onClick={this.logout} variant="contained" color="primary" >
-                                        logout
-                                    </Button>
+                <h3>{this.props.loggedInUser.email}</h3>
+                <Button onClick={this.logout} variant="contained" color="primary" >
+                    logout
+                </Button>
                </CardContent>
         </Card> 
         </div>

@@ -1,18 +1,14 @@
 import React, { Component, useState, useEffect } from 'react';
-
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { CssBaseline } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Words from './Words';
-import Location from './Location';
 import Axios from 'axios';
 import Current from './Current';
 import Spinner from './Spinner';
@@ -37,15 +33,24 @@ const styles = theme => ({
 
 
 const Home = (props) => {
+  console.log("Home: props",props)
   const APPID = keys.APPID;
   const [current, setCurrent] = useState(null);
   const [ name, setName ] = useState('');
   const [ times, setTimes ] = useState([]);
+  const [ users, setUsers ] = useState([]);
+
+
+  const email = props.loggedInUser.email
   // 데이터 여기서 받아오잖아 current 
   // const [ point,setPoint ] = useState(0);
   console.log("Home: current", current)
   // console.log("point",point)
+  console.log("Home: props.loggedInUser", props.loggedInUser)
+  console.log("Home: props.loggedInUser.email", props.loggedInUser.email)
+  console.log("Home: email", email)
 
+//  console.log("Home: email", email)
 
 const adList = async (name) => { 
  await fire
@@ -60,7 +65,21 @@ const adList = async (name) => {
 })
 }
 
-  
+const userInfo = async (email) => {
+  await fire
+  .firestore()
+        .collection("users")  
+        .where("email", "=="  ,email).get().then((snapshot) => { 
+            const newUsers = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            setUsers(newUsers)
+        })
+}
+
+ 
+
   const getLocation = (props) => {
     return new Promise((resolve, reject) => {
       window.navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -76,6 +95,7 @@ const adList = async (name) => {
     setCurrent(data);
     setName(data.name);
     adList(data.name);
+    userInfo(data.email);
     console.log("coords", coords)
   };
 
@@ -93,24 +113,23 @@ const adList = async (name) => {
     getAll();
   }, []);
 
+
 // const getPoint = () => {
 //   // 데이터베이스안에 들어가서 값 가져오기
 //   // 그리고 값을 setPoint를 설정해서 
 //   const totalpoint = this.words.weight
 // }
 
-const { classes } = props;
 
   return (
       <React.Fragment>
         <CssBaseline />
-        <Paper className={classes.header}>
+        <Paper>
 
-          <UserInfo />
+          <UserInfo users={users} />
          
           HOME: React 앱 어플리케이션
-          Header area
-          total points 
+         
         <main className="container">{!current ? <Spinner /> :
             <>
               <Current current={current}  /> </>}

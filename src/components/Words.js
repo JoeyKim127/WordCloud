@@ -39,7 +39,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   });
 
 
-const Words  = ({name,times,classes}) => { 
+const Words = ({name,times,classes}) => { 
 
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState('');
@@ -53,7 +53,6 @@ const handleClose = () => {
     //   add points
     setOpen(false);
   };
-
 
     return (
         <div>

@@ -35,13 +35,11 @@ authListener() {
     });
 }
  
-
-
     render() {
-        // console.log("App: this.state",this.state);
+    
         console.log("App: this.state.user",this.state.user);
         // console.log("App: this.state.user.email",this.state.user.email);
-        // console.log("authState",authState);
+      
     return (
        <Router>
             <AppShell>
