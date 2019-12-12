@@ -6,7 +6,7 @@ class Shop extends Component {
     render() {
         return (
             <div>
-                <h2>shop here</h2>
+                <h2>Shopping Time!</h2>
             </div>
         )
     }

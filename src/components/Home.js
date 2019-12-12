@@ -21,15 +21,27 @@ import fire from '../config/Fire';
 import './Home.css';
 
 const styles = theme => ({
+  root: {
+    padding: theme.spacing(3, 2),
+  },
   fab: {
     position: 'fixed',
     bottom: 20,
     right: 20,
   },
   header: {
-    backgroundColor: '#badebc',
+    // backgroundColor: '#badebc',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  nickname: {
+    textAlign: 'center',
+    marginLeft: 15
+    
   },
   points: {
+    textAlign: 'center',
+    fontSize: 100
     
   },
 })
@@ -49,7 +61,7 @@ const Home = (props,) => {
   // console.log("Home: props.loggedInUser.email", props.loggedInUser.email)
   // console.log("Home: email", email)
 
-  // const { classes } = props;
+  const { classes } = props;
  
 const adList = async (name) => { 
  await fire
@@ -68,7 +80,7 @@ const showUserInfo = async () => {
   await fire
   .firestore()
         .collection("users")  
-        .where("email", "==", "eee@eee.com").get().then((snapshot) => { 
+        .where("email", "==", "aaa@aaa.com").get().then((snapshot) => { 
             const newUserlists = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
@@ -120,20 +132,18 @@ const getUser = () => {
 
 
   return (
-      <React.Fragment>
+      <React.Fragment >
         <CssBaseline />
         <Paper >
-        <div className="header">
-                <h2>display userinfo in home</h2>
-                </div>
                 {userlists.map((userlist)=> 
-                <div key={userlist.id}>
-                  {userlist.email}
-                       <p>{userlist.name}님, 어서오세요!</p> 
-                         
-                         <div className="points">
-                        {userlist.point}
-                        
+                <div  className={classes.header} key={userlist.id}>
+                  {/* {userlist.email} */}
+
+                        <div className={classes.nickname}>
+                        <p>{userlist.name}님, 어서오세요!</p> 
+                        </div>               
+                        <div className={classes.point}>
+                       <h1>{userlist.point}P</h1>
                         </div>
                 </div>
                 )}
@@ -142,19 +152,14 @@ const getUser = () => {
             <>
               <Current current={current}  /> </>}
           </main>
+
         </Paper>
+        <br/>
         <Paper>
-          <Typography> list area</Typography>
           <CardContent>
             <Words name={name} times={times}/>
           </CardContent>
         </Paper>
-
-
-        <Paper>
-          <Typography>완료</Typography>
-        </Paper>
-
       </React.Fragment>
     
   );

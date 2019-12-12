@@ -47,18 +47,16 @@ class AppShell extends Component {
                 </AppBar>
                 <Drawer open={this.state.toggle} >
                     <MenuItem onClick={this.handleDrawerToggle}>
-                <Link component={RouterLink} to="/">Home 화면<HomeIcon /></Link>
+                <Link component={RouterLink} to="/"><HomeIcon />Home</Link>
                     </MenuItem>
 
                  <MenuItem onClick={this.handleDrawerToggle}>
-                        <Link component={RouterLink} to="/shop">SHOP< StorefrontIcon /></Link>
+                        <Link component={RouterLink} to="/shop">< StorefrontIcon />SHOP</Link>
                     </MenuItem>
 
                     <MenuItem onClick={this.handleDrawerToggle}>
-                        <Link component={RouterLink} to="/profile">PROFILE<PersonIcon /></Link>
-                    </MenuItem>
-                 
-                    
+                        <Link component={RouterLink} to="/profile"><PersonIcon />PROFILE</Link>
+                    </MenuItem>  
                 </Drawer>
             </div>
             <div id="content" style={{margin: 'auto', marginTop: '20px'}}>

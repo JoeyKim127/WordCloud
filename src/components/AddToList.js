@@ -1,4 +1,7 @@
 import React, { useState,useEffect } from 'react'
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import fire from '../config/Fire'
 import FileUploader from 'react-firebase-file-uploader';
@@ -6,8 +9,20 @@ import firebase from 'firebase';
 // import FileUpload from './Fileupload'
 
 
-const AddToList = () => {
+const styles = theme => ({ 
+    root: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: 200,
+        },
+      },
+    });
 
+
+
+const AddToList = (props) => {
+
+    const {classes} = props
     const [ company, setCompany ] = useState('');
     const [ title,setTitle ] = useState('');
     const [ img, setImg ] = useState('');
@@ -57,21 +72,35 @@ const handleUploadStart = () => {
   console.log("Add to List: imageURL",imageURL)
 
 return (
-        <form onSubmit={onSubmit}>
-               <h2>Add To List</h2>
+        <form className={classes.root} onSubmit={onSubmit} >
+               <h2>광고 추가하기</h2>
                <div>
-                   <label>title</label>
-                   <input type="text" value={title} onChange={e => setTitle(e.currentTarget.value)}></input>
+
+                    <TextField 
+                        type="text" 
+                        id="standard-basic" 
+                        label="Title" 
+                        value={title} 
+                        onChange={e => setTitle(e.currentTarget.value)}/>
+                   {/* <input   ></input> */}
                </div>
 
                <div>
-                   <label>company</label>
-                   <input type="text" value={company} onChange={e => setCompany(e.currentTarget.value)}></input>
+               <TextField 
+                    type="text" 
+                    id="standard-basic" 
+                    label="Company" 
+                    value={company} 
+                    onChange={e => setCompany(e.currentTarget.value)}/>
                </div>
 
                <div>
-                   <label>location</label>
-                   <input type="text" value={location} onChange={e => setLocation(e.currentTarget.value)}></input>
+               <TextField 
+                    type="text" 
+                    id="standard-basic" 
+                    label="Location" 
+                    value={location} 
+                    onChange={e => setLocation(e.currentTarget.value)}/>
                </div>
 
                <FileUploader
@@ -83,17 +112,23 @@ return (
                 // value={imageURL}  
                 // onChange={e => setImageUrl(e.currentTarget.value) }
                  />
-      <div>
-        <img src={imageURL} />
-      </div>
+
+                    <div>
+                        <p>미리보기</p>
+                        <img src={imageURL} />
+                    </div>
 
                <div>
-                   <label>img</label>
-                   <input type="text" value={imageURL}  onChange={e => setImg(e.currentTarget.value) } />
-               </div>
-               <button>ADD</button>
+               <TextField 
+                    type="text" 
+                    id="standard-basic" 
+                    label="imgURL" 
+                    value={imageURL} 
+                    onChange={e => setImg(e.currentTarget.value)}/>
+                </div>
+               <Button variant="outlined" color="secondary">ADD</Button>
            </form>
     )
 }
 
-export default AddToList;
+export default withStyles(styles)(AddToList);

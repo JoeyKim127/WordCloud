@@ -30,7 +30,23 @@ const styles = theme => ({
     imgsize: {
         height: 'auto',
         width: '100%',
-}
+    },
+    watch: {
+        // textAlign: 'center',
+        display: 'block',
+        margin: 'auto',
+        },
+    title: {
+        fontWeight: 'bold',
+        fontSize:  18
+
+    },
+    company: {
+        fontWeight: '100',
+        fontSize:  15
+
+    },
+
 })
 
 
@@ -72,7 +88,7 @@ const handleClose = () => {
 
     return (
         <div>
-            <h2>AdList</h2>
+            <h2>시청 가능한 광고</h2>
             <div>
             <label>Sort By:</label>{''}
             <select>
@@ -90,14 +106,14 @@ const handleClose = () => {
                     <Grid item xs={2}> 
                         <img className={classes.imgsize} src={time.img} />
                     </Grid>
-                    <Grid item xs={8}>
-                <Typography>{time.title} </Typography>
-                        <Typography color="textSecondary">{time.company}</Typography>
-                        <Typography gutterBottom>{time.location}</Typography>
+                    <Grid item xs={7}>
+                        <Typography className={classes.title}>&nbsp;{time.title} </Typography>
+                        <Typography className={classes.company}color="textSecondary">&nbsp;{time.company}</Typography>
+                        <Typography gutterBottom>&nbsp;{time.location}</Typography>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={3}>
                         {/* <AdPopup /> */}
-                        <Button variant="contained" color="primary" onClick={() => {handleClickOpen(time)}}> popup</Button>
+                        <Button className={classes.watch} variant="contained" color="primary" onClick={() => {handleClickOpen(time)}}>WATCH</Button>
                         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition} >
 
                             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">

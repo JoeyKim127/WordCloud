@@ -23,7 +23,8 @@ class Text extends Component {
         <div>
            <Card>
                <CardContent>
-                <h3>{this.props.loggedInUser.email}</h3>
+               <h3>회원 ID: {this.props.loggedInUser.email}</h3>
+
                 <Button onClick={this.logout} variant="contained" color="primary" >
                     logout
                 </Button>

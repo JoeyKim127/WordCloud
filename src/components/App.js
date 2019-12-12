@@ -21,7 +21,7 @@ class App extends Component {
     componentDidMount() {
         this.authListener();
        
-        this.showUserInfo();
+        // this.showUserInfo();
     }
 
     authListener() {
@@ -37,24 +37,24 @@ class App extends Component {
         });
     }
 
-        showUserInfo() {
-                     fire
-                    .firestore()
-                    .collection("users")  
-                        .where("email", "==", "email")
-                        .get()
-                        .then(snapshot => { 
-                            const userlists = []
-                            snapshot.forEach (doc => {
-                                const data = doc.data()
-                                userlists.push(data)
-                            })
-                            this.setState ({ userlists: userlists})
-                            //  console.log("App: userlists",this.state.user.email)
-                            // console.log("App: show user info",snapshot.docs)
-                              }) 
-                                  console.log("App: this.state.user.email",this.state.user.email)
-                            }
+        // showUserInfo() {
+        //              fire
+        //             .firestore()
+        //             .collection("users")  
+        //                 .where("email", "=="," eeee.gmail.com")
+        //                 .get()
+        //                 .then(snapshot => { 
+        //                     const userlists = []
+        //                     snapshot.forEach (doc => {
+        //                         const data = doc.data()
+        //                         userlists.push(data)
+        //                     })
+        //                     this.setState ({ userlists: userlists})
+        //                     //  console.log("App: userlists",this.state.user.email)
+        //                     // console.log("App: show user info",snapshot.docs)
+        //                       }) 
+        //                           console.log("App: this.state.user.email",this.state.user.email)
+        //                     }
 
       
     //   getUser = () => {

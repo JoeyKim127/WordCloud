@@ -7,6 +7,36 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { withStyles } from "@material-ui/core/styles";
+
+import './Login.css';
+
+const styles = theme => ({
+    loginb: {
+      display: "block",
+      position: 'absolute',
+      justifyContent: 'center',
+      width: 150 ,
+      position: 'center',
+      margin: '0px auto',
+      marginTop: '200px'
+      
+    },
+
+    signupb: {
+     
+        display: "block",
+        position: 'absolute',
+        justifyContent: 'center',
+        width: 150 ,
+        position: 'center',
+        margin: '0px auto'
+      },
+      
+      wholeb: {
+          float: 'center',
+      }
+  });
 
 
 class Login extends Component {
@@ -61,6 +91,8 @@ class Login extends Component {
         })
     }
 
+
+
 // addUserToFireStorage(e) {
 //        e.preventDefault();
 //        const db = firebase.firestore();
@@ -92,10 +124,16 @@ class Login extends Component {
         signupform: !this.state.signupform
     })
 
+
+
+
     render() {
+        const { classes } = this.props;
+
     return (
-        <div>
-            <Button onClick={this.handleLoginToggle} variant="outlined" color="primary" >Login</Button> 
+        <div className={classes.wholeb}>
+            
+            <Button className={classes.loginb} onClick={this.handleLoginToggle} variant="outlined" color="primary" >Login</Button> 
             <Dialog open={this.state.loginform} onClose={this.handleLoginToggle} aria-labelledby="form-dialog-title">   
                 <DialogTitle>Login</DialogTitle>
                     <DialogContent>
@@ -113,7 +151,6 @@ class Login extends Component {
                             fullWidth
                         />
                         <TextField
-                            autoFocus
                             margin="dense"
                             value={this.state.password} 
                             onChange={this.handleChange} 
@@ -130,9 +167,10 @@ class Login extends Component {
                 <Button type="submit" onClick={this.handleLoginToggle} color="primary">close</Button>
             </DialogActions>      
     </Dialog>
-    
 
-    <Button onClick={this.handleSignupToggle} variant="outlined" color="primary" >Signup</Button> 
+&nbsp;
+
+    <Button className={classes.signupb} onClick={this.handleSignupToggle} variant="outlined" color="primary" >Signup</Button> 
     <Dialog open={this.state.signupform} onClose={this.handleSignupToggle} aria-labelledby="form-dialog-title">
         <DialogTitle>Signup</DialogTitle>
             <DialogContent>
@@ -150,7 +188,6 @@ class Login extends Component {
                 />
 
                 <TextField
-                    autoFocus
                     margin="dense"
                     value={this.state.email} 
                     onChange={this.handleChange} 
@@ -162,7 +199,6 @@ class Login extends Component {
                     fullWidth
                 />   
                 <TextField
-                    autoFocus
                     margin="dense"
                     value={this.state.password} 
                     onChange={this.handleChange} 
@@ -186,4 +222,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withStyles(styles)(Login);
