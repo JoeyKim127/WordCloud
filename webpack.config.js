@@ -30,5 +30,12 @@ module.exports = {
         contentBase: './public',
         host: 'localhost',
         port: 8080
-    }
+    },
+
+    // resolve: {
+    //     extensions: ['', '.js', '.jsx', '.css'],
+    //     modulesDirectories: [
+    //       'node_modules'
+    //     ]        
+    // }
 }

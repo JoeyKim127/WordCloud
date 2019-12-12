@@ -43,16 +43,32 @@ const Words = ({name,times,classes}) => {
 
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState('');
+    const [point, setPoint] = useState('0')
+
+
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setCount
+
+    //     },2000);
+    // })
 
     const handleClickOpen = ({ img }) => {
     setOpen(true);
     setImage(img);
+
   };
 
 const handleClose = () => {
     //   add points
     setOpen(false);
   };
+  
+
+// const addPoint = () => {
+//     setPoint( point + 7 )
+//     // console.log(point)
+// };
 
     return (
         <div>
@@ -89,10 +105,13 @@ const handleClose = () => {
                             </IconButton>
 
                             <img className={classes.imgsize} src={`${image}`} />
-                            <Button autoFocus color="inherit" onClick={handleClose}>
+                            <Button  autoFocus color="inherit" >
                                 Add 7  point 
                             </Button>
 
+                            <Button autoFocus color="inherit" onClick={handleClose}>
+                               CLose
+                            </Button>
                         </Dialog>
                     </Grid>
                 </Grid> 

@@ -18,7 +18,7 @@ import NewAdlist from './NewAdlist';
 import UserInfo from './UserInfo'
 import fire from '../config/Fire';
 
-// import './App.css';
+import './Home.css';
 
 const styles = theme => ({
   fab: {
@@ -28,30 +28,29 @@ const styles = theme => ({
   },
   header: {
     backgroundColor: '#badebc',
-  }
+  },
+  points: {
+    
+  },
 })
 
 
-const Home = (props) => {
-  console.log("Home: props",props)
+const Home = (props,) => {
   const APPID = keys.APPID;
   const [current, setCurrent] = useState(null);
   const [ name, setName ] = useState('');
   const [ times, setTimes ] = useState([]);
-  const [ users, setUsers ] = useState([]);
+  const [ userlists, setUserlists ] = useState([]);
+  const [ point,setPoint ] = useState('');
 
+  // console.log("Home: props",props)
+  // console.log("Home: current", current)
+  // console.log("Home: props.loggedInUser", props.loggedInUser)
+  // console.log("Home: props.loggedInUser.email", props.loggedInUser.email)
+  // console.log("Home: email", email)
 
-  const email = props.loggedInUser.email
-  // 데이터 여기서 받아오잖아 current 
-  // const [ point,setPoint ] = useState(0);
-  console.log("Home: current", current)
-  // console.log("point",point)
-  console.log("Home: props.loggedInUser", props.loggedInUser)
-  console.log("Home: props.loggedInUser.email", props.loggedInUser.email)
-  console.log("Home: email", email)
-
-//  console.log("Home: email", email)
-
+  // const { classes } = props;
+ 
 const adList = async (name) => { 
  await fire
   .firestore()
@@ -62,23 +61,28 @@ const adList = async (name) => {
           ...doc.data()
         }))
         setTimes(newTimes)
-})
+  })
 }
 
-const userInfo = async (email) => {
+const showUserInfo = async () => {
   await fire
   .firestore()
         .collection("users")  
-        .where("email", "=="  ,email).get().then((snapshot) => { 
-            const newUsers = snapshot.docs.map((doc) => ({
+        .where("email", "==", "eee@eee.com").get().then((snapshot) => { 
+            const newUserlists = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
             }))
-            setUsers(newUsers)
-        })
+            setUserlists(newUserlists)
+  })
 }
 
- 
+const getUser = () => {
+  const email = props.loggedInUser.email
+  showUserInfo(email);
+  // console.log("email",email)
+}
+
 
   const getLocation = (props) => {
     return new Promise((resolve, reject) => {
@@ -95,8 +99,7 @@ const userInfo = async (email) => {
     setCurrent(data);
     setName(data.name);
     adList(data.name);
-    userInfo(data.email);
-    console.log("coords", coords)
+    // console.log("coords", coords)
   };
 
   const getAll = async () => {
@@ -111,26 +114,31 @@ const userInfo = async (email) => {
 
  useEffect(() => {
     getAll();
+    getUser();
+    // getPoint();
   }, []);
-
-
-// const getPoint = () => {
-//   // 데이터베이스안에 들어가서 값 가져오기
-//   // 그리고 값을 setPoint를 설정해서 
-//   const totalpoint = this.words.weight
-// }
 
 
   return (
       <React.Fragment>
         <CssBaseline />
-        <Paper>
-
-          <UserInfo users={users} />
-         
-          HOME: React 앱 어플리케이션
-         
-        <main className="container">{!current ? <Spinner /> :
+        <Paper >
+        <div className="header">
+                <h2>display userinfo in home</h2>
+                </div>
+                {userlists.map((userlist)=> 
+                <div key={userlist.id}>
+                  {userlist.email}
+                       <p>{userlist.name}님, 어서오세요!</p> 
+                         
+                         <div className="points">
+                        {userlist.point}
+                        
+                        </div>
+                </div>
+                )}
+          {/* <UserInfo userlists={userlists} /> */}
+        <main >{!current ? <Spinner /> :
             <>
               <Current current={current}  /> </>}
           </main>

@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
+import { EventEmitter } from 'events';
+
 
 const styles = theme => ({ 
     fab: {
@@ -20,30 +22,49 @@ const styles = theme => ({
     },
 })
 
-const UserInfo  = ({email,users,classes}) => { 
 
-    console.log()
+function useUsers() {
+
+    const [ users, setUsers ] = useState([]);
+
+    useEffect(() => {
+        fire
+        .firestore()
+        .collection("users") 
+        .where("email", "==", "eee@eee.com").get().then((snapshot) => {
+            const newUsers = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            setUsers(newUsers)
+        })
+    }, [])
+   
+    return users
+}
+
+
+const UserInfo  = () => { 
+
+        const users = useUsers()
+    
         return (
             <div>
-                <div>
-                <h2>display userinfo</h2>
-                </div>
-                {users.map((user)=> 
+                <h2> userinfo component</h2>
+    
+                {users.map((user) =>
                 <div key={user.id}>
-                 <Card>
+                <Card>
                     <CardContent>
-                        {user.email} 
-                        {user.name} 
-                        {user.point}
+                        {user.email} {user.name} {user.point}
                     </CardContent>
-                </Card>   
-                
-                </div>
-                )}
-                </div>
+                    </Card>  
+                    </div> 
+    
+    )}
+            </div>
+    
         )
     }
 
    export default withStyles(styles)(UserInfo);
-
-

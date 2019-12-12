@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import AppShell from './AppShell';
 import Home from './Home';
@@ -14,35 +14,61 @@ class App extends Component {
         super(props);
         this.state = {
             user: {},
+            userlists: {},
         }
     }
 
     componentDidMount() {
         this.authListener();
+       
+        this.showUserInfo();
     }
 
+    authListener() {
+        fire.auth().onAuthStateChanged((user) => {
+            if (user) { 
+                this.setState({user});  
+                
+                console.log("App:user",user)
+            } else {
+                this.setState({ user:null });
+            }
+           
+        });
+    }
 
-authListener() {
-    fire.auth().onAuthStateChanged((user) => {
-        console.log(user);
-        if (user) {
-            this.setState({user});
-            // localStorage.setItem('user',user.uid);
-        } else {
-            this.setState({ user:null });
-            // localStorage.removeItem('user');
-        }
-    });
-}
- 
+        showUserInfo() {
+                     fire
+                    .firestore()
+                    .collection("users")  
+                        .where("email", "==", "email")
+                        .get()
+                        .then(snapshot => { 
+                            const userlists = []
+                            snapshot.forEach (doc => {
+                                const data = doc.data()
+                                userlists.push(data)
+                            })
+                            this.setState ({ userlists: userlists})
+                            //  console.log("App: userlists",this.state.user.email)
+                            // console.log("App: show user info",snapshot.docs)
+                              }) 
+                                  console.log("App: this.state.user.email",this.state.user.email)
+                            }
+
+      
+    //   getUser = () => {
+    //     const email = this.state.user
+    //     // showUserInfo(email);
+    //     console.log("App: email:",email)
+    //   }
+
     render() {
-    
-        console.log("App: this.state.user",this.state.user);
-        // console.log("App: this.state.user.email",this.state.user.email);
+        // console.log("user",user)
       
     return (
-       <Router>
-            <AppShell>
+        <Router>
+             <AppShell>
                 <div>
   
             {this.state.user ?  <>
@@ -52,9 +78,8 @@ authListener() {
                 </div>
 
             </AppShell>
-           
-      </Router>
-    );
-};
-};
+        </Router>
+        );
+    };
+}
 export default App;
